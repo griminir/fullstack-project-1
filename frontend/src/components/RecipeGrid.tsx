@@ -20,14 +20,17 @@ const RecipeGrid = () => {
   }, []);
 
   return (
-    <ul>
-      {recipes.map((recipe) => (
-        <li key={recipe.id}>
-          <h2>{recipe.title}</h2>
-          <p>{recipe.description}</p>
-        </li>
-      ))}
-    </ul>
+    <>
+      {error && <div>{error}</div>}
+      <ul>
+        {recipes.map((recipe) => (
+          <li key={recipe.id}>
+            <h2>{recipe.title}</h2>
+            <p>{recipe.description}</p>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 
