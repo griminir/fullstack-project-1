@@ -27,13 +27,13 @@ const RecipeGrid = () => {
       >
         {isLoading &&
           skeletons.map((skeleton) => (
-            <RecipeCardContainer>
-              <RecipeCardSkeleton key={skeleton} />
+            <RecipeCardContainer key={skeleton}>
+              <RecipeCardSkeleton />
             </RecipeCardContainer>
           ))}
         {data.map((recipe) => (
-          <RecipeCardContainer>
-            <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCardContainer key={recipe.id}>
+            <RecipeCard recipe={recipe} />
           </RecipeCardContainer>
         ))}
       </SimpleGrid>
