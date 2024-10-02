@@ -5,8 +5,17 @@ import RecipeCardSkeleton from './RecipeCardSkeleton';
 import RecipeCardContainer from './RecipeCardContainer';
 
 const RecipeGrid = () => {
-  const { recipes, error, isLoading } = useRecipes();
-  const skeletons = [1, 2, 4, 5, 6, 7, 8];
+  const { data, error, isLoading } = useRecipes();
+  const skeletons = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+  ];
 
   return (
     <>
@@ -22,7 +31,7 @@ const RecipeGrid = () => {
               <RecipeCardSkeleton key={skeleton} />
             </RecipeCardContainer>
           ))}
-        {recipes.map((recipe) => (
+        {data.map((recipe) => (
           <RecipeCardContainer>
             <RecipeCard key={recipe.id} recipe={recipe} />
           </RecipeCardContainer>
