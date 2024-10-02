@@ -3,7 +3,9 @@ import NavBar from './NavBar';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 
 const RecipePageTemplate = () => {
-  // const { data, error, isLoading } = useSingleRecipe(2); coded at because not needed right now
+  const { data, error, isLoading } = useSingleRecipe(2);
+  console.log(data);
+
   return (
     <Grid templateAreas={`"header" "main"`}>
       <GridItem area='header' bg='green' color='white'>
@@ -14,13 +16,14 @@ const RecipePageTemplate = () => {
       </GridItem>
       <GridItem area='main'>
         <HStack>
-          {/* <ul>
+          {/* {data && <h1>{data[0].title}</h1>} */}
+          <ul>
             {data.map((recipe) => (
               <li key={recipe.ingridientId}>
                 {recipe.name} {recipe.quantity} {recipe.unit}
               </li>
             ))}
-          </ul> */}
+          </ul>
         </HStack>
       </GridItem>
     </Grid>
