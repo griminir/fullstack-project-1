@@ -3,7 +3,7 @@ select r.id,
 r.title,
 [r].[description],
 r.picture,
-ing.id,
+ing.id as ingredientId,
 ing.quantity,
 ing.unit,
 [ing].[name]
