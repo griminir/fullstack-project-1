@@ -9,7 +9,7 @@ const { getAllRecipes, getRecipeById, getRecipeInstructionsById } =
 
 router.get('/recipes', getAllRecipes);
 router.get('/recipes/:id', getRecipeById);
-router.get('/recipe/instructions/:id', getRecipeInstructionsById);
+router.get('/recipes/:id/instructions', getRecipeInstructionsById);
 
 module.exports = {
   routes: router,
