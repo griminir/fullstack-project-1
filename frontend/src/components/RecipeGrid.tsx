@@ -2,6 +2,7 @@ import { SimpleGrid, Text } from '@chakra-ui/react';
 import useRecipes from '../hooks/useRecipes';
 import RecipeCard from './RecipeCard';
 import RecipeCardSkeleton from './RecipeCardSkeleton';
+import RecipeCardContainer from './RecipeCardContainer';
 
 const RecipeGrid = () => {
   const { recipes, error, isLoading } = useRecipes();
@@ -16,9 +17,15 @@ const RecipeGrid = () => {
         padding='10px'
       >
         {isLoading &&
-          skeletons.map((skeleton) => <RecipeCardSkeleton key={skeleton} />)}
+          skeletons.map((skeleton) => (
+            <RecipeCardContainer>
+              <RecipeCardSkeleton key={skeleton} />
+            </RecipeCardContainer>
+          ))}
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCardContainer>
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          </RecipeCardContainer>
         ))}
       </SimpleGrid>
     </>
