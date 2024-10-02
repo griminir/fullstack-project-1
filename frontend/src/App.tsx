@@ -6,7 +6,7 @@ import RecipeGrid from './components/RecipeGrid';
 function App() {
   return (
     <>
-      <Grid templateAreas={`"header header header" "main main main"`}>
+      <Grid templateAreas={`"header" "main"`}>
         <GridItem area='header' bg='green' color='white'>
           <NavBar />
         </GridItem>
