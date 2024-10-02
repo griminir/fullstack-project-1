@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import apiClient from '../services/api-client';
+import { Text } from '@chakra-ui/react';
+import useRecipes from '../hooks/useRecipes';
 
-interface Recipe {
-  id: number;
-  title: string;
-  description: string;
-  // image: string; // ill deal with this later
-}
+
 
 const RecipeGrid = () => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    apiClient
-      .get<Recipe[]>('/recipes')
-      .then((response) => setRecipes(response.data))
-      .catch((error) => setError(error.message));
-  }, []);
+  const { recipes, error } = useRecipes();
 
   return (
     <>
-      {error && <div>{error}</div>}
+      {error && <Text>{error}</Text>}
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id}>
