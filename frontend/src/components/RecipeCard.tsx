@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, Image, Text } from '@chakra-ui/react';
+import { Button, Card, CardBody, Heading, Image, Text } from '@chakra-ui/react';
 import { Recipe } from '../hooks/useRecipes';
 
 interface Props {
@@ -7,10 +7,12 @@ interface Props {
 
 const RecipeCard = ({ recipe }: Props) => {
   return (
-    <Card >
+    <Card>
       <Image src={recipe.picture} />
       <CardBody>
-        <Heading fontSize='2xl'>{recipe.title}</Heading>
+        <Button variant='link' fontSize='2xl'>
+          {recipe.title}
+        </Button>
         <Text>{recipe.description}</Text>
       </CardBody>
     </Card>
