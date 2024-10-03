@@ -17,27 +17,26 @@ const RecipeGrid = () => {
     'eight',
   ];
 
+  if (error) return <Text>{error}</Text>;
+
   return (
-    <>
-      {error && <Text>{error}</Text>}
-      <SimpleGrid
-        columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        spacing={6}
-        padding='10px'
-      >
-        {isLoading &&
-          skeletons.map((skeleton) => (
-            <RecipeCardContainer key={skeleton}>
-              <RecipeCardSkeleton />
-            </RecipeCardContainer>
-          ))}
-        {data.map((recipe) => (
-          <RecipeCardContainer key={recipe.id}>
-            <RecipeCard recipe={recipe} />
+    <SimpleGrid
+      columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+      spacing={6}
+      padding='10px'
+    >
+      {isLoading &&
+        skeletons.map((skeleton) => (
+          <RecipeCardContainer key={skeleton}>
+            <RecipeCardSkeleton />
           </RecipeCardContainer>
         ))}
-      </SimpleGrid>
-    </>
+      {data.map((recipe) => (
+        <RecipeCardContainer key={recipe.id}>
+          <RecipeCard recipe={recipe} />
+        </RecipeCardContainer>
+      ))}
+    </SimpleGrid>
   );
 };
 
