@@ -11,7 +11,6 @@ const SearchInput = () => {
         borderRadius={20}
         placeholder='Search Recipes...'
         variant='filled'
-        _placeholder={{ color: 'white' }}
       ></Input>
     </InputGroup>
   );
