@@ -1,11 +1,7 @@
 import { Button, Grid, GridItem, HStack } from '@chakra-ui/react';
 import NavBar from './NavBar';
-import useSingleRecipe from '../hooks/useSingleRecipe';
 
 const RecipePageTemplate = () => {
-  const { data, error, isLoading } = useSingleRecipe(2);
-  console.log(data);
-
   return (
     <Grid templateAreas={`"header" "main"`}>
       <GridItem area='header' bg='green' color='white'>
@@ -15,16 +11,7 @@ const RecipePageTemplate = () => {
         </HStack>
       </GridItem>
       <GridItem area='main'>
-        <HStack>
-          {/* {data && <h1>{data[0].title}</h1>} */}
-          <ul>
-            {data.map((recipe) => (
-              <li key={recipe.ingridientId}>
-                {recipe.name} {recipe.quantity} {recipe.unit}
-              </li>
-            ))}
-          </ul>
-        </HStack>
+        <HStack></HStack>
       </GridItem>
     </Grid>
   );
