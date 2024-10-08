@@ -38,8 +38,23 @@ const getRecipeInstructionsById = async (req, res, next) => {
   }
 };
 
+const getRecipeIngredientsById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const oneRecipe = await recipeData.getRecipeIngredientsById(id);
+
+    if (oneRecipe.length === 0) {
+      res.status(400).send('there is no recipe with that Id');
+    }
+    res.send(oneRecipe);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   getRecipeInstructionsById,
+  getRecipeIngredientsById,
 };

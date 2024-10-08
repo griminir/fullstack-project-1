@@ -43,8 +43,23 @@ const getRecipeInstructionsById = async (id) => {
   }
 };
 
+const getRecipeIngredientsById = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const oneRecipe = await pool
+      .request()
+      .input('id', sql.Int, id)
+      .query(sqlQueries.getRecipeIngredientsById);
+    return oneRecipe.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   getRecipeInstructionsById,
+  getRecipeIngredientsById,
 };
