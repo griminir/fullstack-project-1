@@ -1,4 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import useData from './useData';
+import apiClient from '../services/api-client';
 
 export interface Instruction {
   id: number;
@@ -6,6 +8,13 @@ export interface Instruction {
 }
 
 const useInstructions = (id: number) =>
-  useData<Instruction>('/recipes/' + id + '/instructions');
+  useQuery({
+    queryKey: ['/recipes', id, 'instructions'],
+    queryFn: () =>
+      apiClient
+        .get<Instruction[]>('/recipes/' + id + '/instructions')
+        .then((res) => res.data),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
 export default useInstructions;

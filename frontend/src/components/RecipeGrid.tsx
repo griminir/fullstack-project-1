@@ -5,7 +5,7 @@ import RecipeCardSkeleton from './RecipeCardSkeleton';
 import RecipeCardContainer from './RecipeCardContainer';
 
 const RecipeGrid = () => {
-  const { data, error, isLoading } = useRecipes();
+  const { data: recipeData, error: recipeError, isPending } = useRecipes();
   const skeletons = [
     'one',
     'two',
@@ -17,7 +17,7 @@ const RecipeGrid = () => {
     'eight',
   ];
 
-  if (error) return <Text>{error}</Text>;
+  if (recipeError) return <Text>{recipeError.message}</Text>;
 
   return (
     <SimpleGrid
@@ -25,13 +25,13 @@ const RecipeGrid = () => {
       spacing={6}
       padding='10px'
     >
-      {isLoading &&
+      {isPending &&
         skeletons.map((skeleton) => (
           <RecipeCardContainer key={skeleton}>
             <RecipeCardSkeleton />
           </RecipeCardContainer>
         ))}
-      {data.map((recipe) => (
+      {recipeData?.map((recipe) => (
         <RecipeCardContainer key={recipe.id}>
           <RecipeCard recipe={recipe} />
         </RecipeCardContainer>
