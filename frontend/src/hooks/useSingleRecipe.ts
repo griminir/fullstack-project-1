@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { Recipe } from './useRecipes';
 import apiClient from '../services/api-client';
+import Recipe from '../interfaces/Recipe';
 
 const useSingleRecipe = (id: number) =>
   useQuery({

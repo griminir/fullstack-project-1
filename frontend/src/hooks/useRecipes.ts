@@ -1,12 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import apiClient from '../services/api-client';
+import Recipe from '../interfaces/Recipe';
 
-export interface Recipe {
-  id: number;
-  title: string;
-  description: string;
-  picture: string; // ill work on this later
-}
+
 
 const useRecipes = () =>
   useQuery({

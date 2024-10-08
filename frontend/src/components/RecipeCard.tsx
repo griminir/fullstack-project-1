@@ -1,6 +1,6 @@
-import { Button, Card, CardBody, Heading, Image, Text } from '@chakra-ui/react';
-import { Recipe } from '../hooks/useRecipes';
+import { Button, Card, CardBody, Image, Text } from '@chakra-ui/react';
 import noImage from '../assets/no-image.webp';
+import Recipe from '../interfaces/Recipe';
 
 interface Props {
   recipe: Recipe;
