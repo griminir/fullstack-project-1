@@ -1,5 +1,5 @@
 import { Grid, GridItem } from '@chakra-ui/react';
-import RecipeGrid from './RecipeGrid';
+import RecipeGrid from '../components/RecipeGrid';
 
 const HomePage = () => {
   return (
