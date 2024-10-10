@@ -4,8 +4,11 @@ import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
 import IngredientsContainer from '../components/IngredientsContainer';
 import InstructionsContainer from '../components/InstructionsContainer';
+import { queryClient } from '../main';
 
 const RecipeDetailsPage = () => {
+  queryClient.invalidateQueries({ queryKey: ['ingredients'] });
+  queryClient.invalidateQueries({ queryKey: ['instructions'] });
   // fetch data from the API
   const { id } = useParams();
   const param = parseInt(id!);
