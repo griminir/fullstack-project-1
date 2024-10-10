@@ -1,4 +1,11 @@
-import { Box, Button, Heading, Spinner, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Spinner,
+  VStack,
+  HStack,
+} from '@chakra-ui/react';
 import useAddIngredient, { Ingredients } from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
@@ -8,6 +15,7 @@ interface Props {
 }
 
 const IngredientsContainer = ({ idParam }: Props) => {
+  // fetch data from the API
   const {
     data: ingredientsData,
     error: ingredientsError,
@@ -33,10 +41,10 @@ const IngredientsContainer = ({ idParam }: Props) => {
       <VStack spacing={10}>
         <Heading>Ingredients</Heading>
         {ingredientsData?.map((ingredient) => (
-          <IngredientDetailView
-            key={ingredient.ingredientId}
-            ingredient={ingredient}
-          />
+          <HStack width={'100%'} key={ingredient.ingredientId}>
+            <IngredientDetailView ingredient={ingredient} />
+            <Button bgColor={'red'}>Delete</Button>
+          </HStack>
         ))}
         <Button
           colorScheme='teal'
