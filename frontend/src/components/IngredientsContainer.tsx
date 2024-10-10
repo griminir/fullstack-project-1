@@ -9,6 +9,7 @@ import {
 import useAddIngredient, { Ingredients } from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
+import useDeleteIngredient from '../hooks/useDeleteIngredient';
 
 interface Props {
   idParam: number;
@@ -24,12 +25,17 @@ const IngredientsContainer = ({ idParam }: Props) => {
 
   // data mutation
   const { mutate: addIngredient } = useCreateIngredient();
+  const { mutate: deleteIngredient } = useDeleteIngredient();
 
   // handeling click events
   const handelAddIngredient = (data: Ingredients) => {
     console.log(data);
 
     addIngredient(data);
+  };
+
+  const handleDeleteIngredient = (id: number) => {
+    deleteIngredient(id);
   };
 
   if (ingredientsPending) return <Spinner />;
@@ -43,7 +49,12 @@ const IngredientsContainer = ({ idParam }: Props) => {
         {ingredientsData?.map((ingredient) => (
           <HStack width={'100%'} key={ingredient.ingredientId}>
             <IngredientDetailView ingredient={ingredient} />
-            <Button bgColor={'red'}>Delete</Button>
+            <Button
+              bgColor={'red'}
+              onClick={() => handleDeleteIngredient(ingredient.ingredientId)}
+            >
+              Delete
+            </Button>
           </HStack>
         ))}
         <Button

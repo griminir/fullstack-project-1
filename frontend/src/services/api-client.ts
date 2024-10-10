@@ -33,6 +33,12 @@ class APIClient<T> {
       )
       .then((res) => res.data);
   }
+
+  delete(id: number, extendedEndpoint?: string) {
+    return axiosInstance.delete(
+      `${this.endpoint}/${extendedEndpoint ? extendedEndpoint : ''}/${id}`
+    );
+  }
 }
 
 export default APIClient;
