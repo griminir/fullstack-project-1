@@ -1,6 +1,7 @@
-import { Button, Card, CardBody, Image, Text } from '@chakra-ui/react';
+import { Heading, Card, CardBody, Image, Text } from '@chakra-ui/react';
 import noImage from '../assets/no-image.webp';
 import Recipe from '../interfaces/Recipe';
+import { Link } from 'react-router-dom';
 
 interface Props {
   recipe: Recipe;
@@ -11,9 +12,9 @@ const RecipeCard = ({ recipe }: Props) => {
     <Card>
       <Image src={recipe.picture === null ? noImage : recipe.picture} />
       <CardBody>
-        <Button variant='link' fontSize='2xl'>
-          {recipe.title}
-        </Button>
+        <Heading fontSize='2xl'>
+          <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
+        </Heading>
         <Text>{recipe.description}</Text>
       </CardBody>
     </Card>

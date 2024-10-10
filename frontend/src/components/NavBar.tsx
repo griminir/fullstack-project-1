@@ -14,7 +14,7 @@ const NavBar = () => {
         <SearchInput />
         <ColorModeSwitch />
       </HStack>
-      <HStack justifyContent={'center'}>
+      <HStack bg={'green'} justifyContent={'center'}>
         <Button colorScheme='teal'>Add new recipe</Button>
       </HStack>
     </>

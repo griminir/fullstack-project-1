@@ -1,10 +1,12 @@
-import { Grid, GridItem, HStack } from '@chakra-ui/react';
+import { Grid, GridItem, HStack, Text } from '@chakra-ui/react';
 
 const NewRecipePage = () => {
   return (
     <Grid templateAreas={`"main"`}>
       <GridItem area='main'>
-        <HStack></HStack>
+        <HStack>
+          <Text> New Recipe Page</Text>
+        </HStack>
       </GridItem>
     </Grid>
   );
