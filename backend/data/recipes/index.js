@@ -43,6 +43,37 @@ const getRecipeInstructionsById = async (id) => {
   }
 };
 
+const createIngredient = async (ingredientData) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const newIngredient = await pool
+      .request()
+      .input('recipeId', sql.Int, ingredientData.recipeId)
+      .input('quantity', sql.Float, ingredientData.quantity)
+      .input('unit', sql.NVarChar, ingredientData.unit)
+      .input('name', sql.NVarChar, ingredientData.name)
+      .query(sqlQueries.createIngredient);
+    return newIngredient.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+const deleteIngredient = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const deleteIngredient = await pool
+      .request()
+      .input('id', sql.Int, id)
+      .query(sqlQueries.deleteIngredient);
+    return deleteIngredient.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const getRecipeIngredientsById = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -57,26 +88,11 @@ const getRecipeIngredientsById = async (id) => {
   }
 };
 
-const createIngredient = async (ingredientData) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('recipes');
-    const newIngredient = await pool
-      .request()
-      .input('recipeId', sql.Int, ingredientData.recipeId)
-      .input('quantity', sql.Float, ingredientData.quantity)
-      .input('unit', sql.NVarChar, ingredientData.unit)
-      .input('name', sql.NVarChar, ingredientData.name)
-      .query(sqlQueries.createIngredient);
-  } catch (error) {
-    return error.message;
-  }
-};
-
 module.exports = {
   getAllRecipes,
   getRecipeById,
   getRecipeInstructionsById,
   getRecipeIngredientsById,
   createIngredient,
+  deleteIngredient,
 };

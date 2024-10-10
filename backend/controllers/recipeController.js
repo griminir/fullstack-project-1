@@ -2,6 +2,7 @@
 
 const recipeData = require('../data/recipes');
 
+// recipes
 const getAllRecipes = async (req, res, next) => {
   try {
     const recipes = await recipeData.getAllRecipes();
@@ -24,20 +25,7 @@ const getRecipeById = async (req, res, next) => {
   }
 };
 
-const getRecipeInstructionsById = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const oneRecipe = await recipeData.getRecipeInstructionsById(id);
-
-    if (oneRecipe.length === 0) {
-      res.status(400).send('there is no recipe with that Id');
-    }
-    res.send(oneRecipe);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
+// ingredients
 const getRecipeIngredientsById = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -62,10 +50,36 @@ const createIngredient = async (req, res, next) => {
   }
 };
 
+const deleteIngredient = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedIngredient = await recipeData.deleteIngredient(id);
+    res.send(deletedIngredient);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+// instructions
+const getRecipeInstructionsById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const oneRecipe = await recipeData.getRecipeInstructionsById(id);
+
+    if (oneRecipe.length === 0) {
+      res.status(400).send('there is no recipe with that Id');
+    }
+    res.send(oneRecipe);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   getRecipeInstructionsById,
   getRecipeIngredientsById,
   createIngredient,
+  deleteIngredient,
 };
