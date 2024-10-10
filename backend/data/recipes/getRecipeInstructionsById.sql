@@ -1,4 +1,5 @@
 select distinct
+r.id as recipeId,
 ins.id,
 ins.step
 from [dbo].[recipes] as r

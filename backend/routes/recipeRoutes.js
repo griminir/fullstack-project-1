@@ -11,6 +11,8 @@ const {
   getRecipeIngredientsById,
   createIngredient,
   deleteIngredient,
+  createInstruction,
+  deleteInstruction,
 } = recipeController;
 
 router.get('/recipes', getAllRecipes);
@@ -18,7 +20,9 @@ router.get('/recipes/:id', getRecipeById);
 router.get('/recipes/:id/instructions', getRecipeInstructionsById);
 router.get('/recipes/:id/ingredients', getRecipeIngredientsById);
 router.post('/recipes/ingredients', createIngredient);
+router.post('/recipes/instructions', createInstruction);
 router.delete('/recipes/ingredients/:id', deleteIngredient);
+router.delete('/recipes/instructions/:id', deleteInstruction);
 
 module.exports = {
   routes: router,

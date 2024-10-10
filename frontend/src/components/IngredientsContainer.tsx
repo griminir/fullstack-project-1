@@ -38,8 +38,8 @@ const IngredientsContainer = ({ idParam }: Props) => {
     deleteIngredient(id);
   };
 
+  //state handeling
   if (ingredientsPending) return <Spinner />;
-
   if (ingredientsError || !ingredientsData) throw ingredientsError;
 
   return (

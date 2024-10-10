@@ -1,17 +1,9 @@
-import {
-  Grid,
-  GridItem,
-  VStack,
-  Spinner,
-  Heading,
-  Button,
-} from '@chakra-ui/react';
+import { Grid, GridItem, VStack, Spinner } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
-import useInstructions from '../hooks/useInstructions';
-import InstructionsDetailView from '../components/InstructionsDetailView';
 import IngredientsContainer from '../components/IngredientsContainer';
+import InstructionsContainer from '../components/InstructionsContainer';
 
 const RecipeDetailsPage = () => {
   // fetch data from the API
@@ -23,24 +15,14 @@ const RecipeDetailsPage = () => {
     isPending: recipePending,
   } = useSingleRecipe(param);
 
-  const {
-    data: InstructionsData,
-    error: InstructionsError,
-    isPending: InstructionsPending,
-  } = useInstructions(param);
-
   //pending state
   if (recipePending) return <Spinner />;
-
-  if (InstructionsPending) return <Spinner />;
 
   //error handeling
   if (recipeError || !recipeData) throw recipeError;
 
-  if (InstructionsError || !InstructionsData) throw InstructionsError;
-
   return (
-    <Grid paddingX={10} templateAreas={`"main"`}>
+    <Grid paddingX={10} paddingBottom={10} templateAreas={`"main"`}>
       <GridItem area='main'>
         <VStack spacing={10}>
           {recipeData?.map((recipe) => (
@@ -48,14 +30,7 @@ const RecipeDetailsPage = () => {
           ))}
           <IngredientsContainer idParam={param} />
 
-          <Heading>Instructions</Heading>
-          {InstructionsData?.map((instruction) => (
-            <InstructionsDetailView
-              key={instruction.id}
-              instructions={instruction}
-            />
-          ))}
-          <Button colorScheme='teal'>Add new instruction</Button>
+          <InstructionsContainer idParam={param} />
         </VStack>
       </GridItem>
     </Grid>

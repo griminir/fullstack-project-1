@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
 
 export interface Instruction {
+  recipeId: number;
   id: number;
   step: string;
 }

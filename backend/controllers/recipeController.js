@@ -75,6 +75,26 @@ const getRecipeInstructionsById = async (req, res, next) => {
   }
 };
 
+const createInstruction = async (req, res, next) => {
+  try {
+    const instructionData = req.body;
+    const newInstruction = await recipeData.createInstruction(instructionData);
+    res.send(newInstruction);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const deleteInstruction = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedInstruction = await recipeData.deleteInstruction(id);
+    res.send(deletedInstruction);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
@@ -82,4 +102,6 @@ module.exports = {
   getRecipeIngredientsById,
   createIngredient,
   deleteIngredient,
+  createInstruction,
+  deleteInstruction,
 };

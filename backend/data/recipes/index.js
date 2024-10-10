@@ -29,20 +29,6 @@ const getRecipeById = async (id) => {
   }
 };
 
-const getRecipeInstructionsById = async (id) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('recipes');
-    const oneRecipe = await pool
-      .request()
-      .input('id', sql.Int, id)
-      .query(sqlQueries.getRecipeInstructionsById);
-    return oneRecipe.recordset;
-  } catch (error) {
-    return error.message;
-  }
-};
-
 const createIngredient = async (ingredientData) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -88,6 +74,49 @@ const getRecipeIngredientsById = async (id) => {
   }
 };
 
+const getRecipeInstructionsById = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const oneRecipe = await pool
+      .request()
+      .input('id', sql.Int, id)
+      .query(sqlQueries.getRecipeInstructionsById);
+    return oneRecipe.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+const createInstruction = async (instructionData) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const newInstruction = await pool
+      .request()
+      .input('recipeId', sql.Int, instructionData.recipeId)
+      .input('step', sql.NChar, instructionData.step)
+      .query(sqlQueries.createInstruction);
+    return newInstruction.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+const deleteInstruction = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const deleteInstruction = await pool
+      .request()
+      .input('id', sql.Int, id)
+      .query(sqlQueries.deleteInstruction);
+    return deleteInstruction.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
@@ -95,4 +124,6 @@ module.exports = {
   getRecipeIngredientsById,
   createIngredient,
   deleteIngredient,
+  createInstruction,
+  deleteInstruction,
 };
