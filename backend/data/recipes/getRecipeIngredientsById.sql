@@ -1,5 +1,6 @@
 select
 ing.id as ingredientId,
+ing.recipeId,
 ing.quantity,
 ing.unit,
 [ing].[name]

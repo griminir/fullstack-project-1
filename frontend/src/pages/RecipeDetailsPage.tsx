@@ -9,12 +9,12 @@ import {
 import { useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
-import useIngredients from '../hooks/UseIngeredients';
-import IngredientDetailView from '../components/IngredientDetailView';
 import useInstructions from '../hooks/useInstructions';
 import InstructionsDetailView from '../components/InstructionsDetailView';
+import IngredientsContainer from '../components/IngredientsContainer';
 
 const RecipeDetailsPage = () => {
+  // fetch data from the API
   const { id } = useParams();
   const param = parseInt(id!);
   const {
@@ -22,23 +22,21 @@ const RecipeDetailsPage = () => {
     error: recipeError,
     isPending: recipePending,
   } = useSingleRecipe(param);
-  const {
-    data: ingredientsData,
-    error: ingredientsError,
-    isPending: ingredientsPending,
-  } = useIngredients(param);
+
   const {
     data: InstructionsData,
     error: InstructionsError,
     isPending: InstructionsPending,
   } = useInstructions(param);
 
+  //pending state
   if (recipePending) return <Spinner />;
-  if (ingredientsPending) return <Spinner />;
+
   if (InstructionsPending) return <Spinner />;
 
+  //error handeling
   if (recipeError || !recipeData) throw recipeError;
-  if (ingredientsError || !ingredientsData) throw ingredientsError;
+
   if (InstructionsError || !InstructionsData) throw InstructionsError;
 
   return (
@@ -48,15 +46,7 @@ const RecipeDetailsPage = () => {
           {recipeData?.map((recipe) => (
             <RecipeDetailView key={recipe.id} recipe={recipe} />
           ))}
-
-          <Heading>Ingredients</Heading>
-          {ingredientsData?.map((ingredient) => (
-            <IngredientDetailView
-              key={ingredient.ingredientId}
-              ingredient={ingredient}
-            />
-          ))}
-          <Button colorScheme='teal'>Add new ingredient</Button>
+          <IngredientsContainer idParam={param} />
 
           <Heading>Instructions</Heading>
           {InstructionsData?.map((instruction) => (

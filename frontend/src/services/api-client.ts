@@ -25,12 +25,13 @@ class APIClient<T> {
       .then((res) => res.data);
   }
 
-  post(id?: number, extendedEndpoint?: string) {
-    return axiosInstance.post<T[]>(
-      `${this.endpoint}/${id ? id : ''}${
-        extendedEndpoint ? extendedEndpoint : ''
-      }`
-    );
+  post(data: T, extendedEndpoint?: string) {
+    return axiosInstance
+      .post<T[]>(
+        `${this.endpoint}/${extendedEndpoint ? extendedEndpoint : ''}`,
+        data
+      )
+      .then((res) => res.data);
   }
 }
 
