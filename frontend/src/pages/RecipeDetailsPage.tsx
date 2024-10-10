@@ -4,6 +4,8 @@ import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
 import useIngredients from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
+import useInstructions from '../hooks/useInstructions';
+import InstructionsDetailView from '../components/InstructionsDetailView';
 
 const RecipeDetailsPage = () => {
   const { id } = useParams();
@@ -18,12 +20,19 @@ const RecipeDetailsPage = () => {
     error: ingredientsError,
     isPending: ingredientsPending,
   } = useIngredients(param);
+  const {
+    data: InstructionsData,
+    error: InstructionsError,
+    isPending: InstructionsPending,
+  } = useInstructions(param);
 
   if (recipePending) return <Spinner />;
   if (ingredientsPending) return <Spinner />;
+  if (InstructionsPending) return <Spinner />;
 
   if (recipeError || !recipeData) throw recipeError;
   if (ingredientsError || !ingredientsData) throw ingredientsError;
+  if (InstructionsError || !InstructionsData) throw InstructionsError;
 
   return (
     <Grid paddingX={10} templateAreas={`"main"`}>
@@ -36,6 +45,12 @@ const RecipeDetailsPage = () => {
             <IngredientDetailView
               key={ingredient.ingredientId}
               ingredient={ingredient}
+            />
+          ))}
+          {InstructionsData?.map((instruction) => (
+            <InstructionsDetailView
+              key={instruction.id}
+              instructions={instruction}
             />
           ))}
         </VStack>
