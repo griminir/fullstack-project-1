@@ -24,6 +24,14 @@ class APIClient<T> {
       .get<T[]>(`${this.endpoint}/${id}`)
       .then((res) => res.data);
   }
+
+  post(id?: number, extendedEndpoint?: string) {
+    return axiosInstance.post<T[]>(
+      `${this.endpoint}/${id ? id : ''}${
+        extendedEndpoint ? extendedEndpoint : ''
+      }`
+    );
+  }
 }
 
 export default APIClient;

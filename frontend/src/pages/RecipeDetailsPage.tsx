@@ -1,4 +1,11 @@
-import { Grid, GridItem, VStack, Spinner } from '@chakra-ui/react';
+import {
+  Grid,
+  GridItem,
+  VStack,
+  Spinner,
+  Heading,
+  Button,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
@@ -41,18 +48,24 @@ const RecipeDetailsPage = () => {
           {recipeData?.map((recipe) => (
             <RecipeDetailView key={recipe.id} recipe={recipe} />
           ))}
+
+          <Heading>Ingredients</Heading>
           {ingredientsData?.map((ingredient) => (
             <IngredientDetailView
               key={ingredient.ingredientId}
               ingredient={ingredient}
             />
           ))}
+          <Button colorScheme='teal'>Add new ingredient</Button>
+
+          <Heading>Instructions</Heading>
           {InstructionsData?.map((instruction) => (
             <InstructionsDetailView
               key={instruction.id}
               instructions={instruction}
             />
           ))}
+          <Button colorScheme='teal'>Add new instruction</Button>
         </VStack>
       </GridItem>
     </Grid>

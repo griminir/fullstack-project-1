@@ -52,9 +52,20 @@ const getRecipeIngredientsById = async (req, res, next) => {
   }
 };
 
+const createIngredient = async (req, res, next) => {
+  try {
+    const ingredientData = req.body;
+    const newIngredient = await recipeData.createIngredient(ingredientData);
+    res.send(newIngredient);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   getRecipeInstructionsById,
   getRecipeIngredientsById,
+  createIngredient,
 };
