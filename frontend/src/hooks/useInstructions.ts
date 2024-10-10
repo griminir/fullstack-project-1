@@ -11,7 +11,7 @@ const apiClient = new APIClient<Instruction>('/recipes');
 
 const useInstructions = (id: number) =>
   useQuery({
-    queryKey: ['/recipes', id, 'instructions'],
+    queryKey: ['instructions'],
     queryFn: () => apiClient.getAll(id, '/instructions'),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
