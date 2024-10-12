@@ -29,16 +29,47 @@ const getRecipeById = async (id) => {
   }
 };
 
+const getRecipeIngredientsById = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const oneRecipe = await pool
+      .request()
+      .input('id', sql.Int, id)
+      .query(sqlQueries.getRecipeIngredientsById);
+    return oneRecipe.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const createIngredient = async (ingredientData) => {
   try {
     let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('recipes');
+
+    if (Array.isArray(ingredientData) && ingredientData.length > 1) {
+      for (const ingredient of ingredientData) {
+        await pool
+          .request()
+          .input('recipeId', sql.Int, ingredient.recipeId)
+          .input('quantity', sql.Float, ingredient.quantity)
+          .input('unit', sql.NVarChar, ingredient.unit)
+          .input('name', sql.NVarChar, ingredient.name)
+          .query(sqlQueries.createIngredient);
+      }
+      return { message: 'Ingredients inserted successfully' };
+    }
+
+    const ingredient = Array.isArray(ingredientData)
+      ? ingredientData[0]
+      : ingredientData;
     const newIngredient = await pool
       .request()
-      .input('recipeId', sql.Int, ingredientData.recipeId)
-      .input('quantity', sql.Float, ingredientData.quantity)
-      .input('unit', sql.NVarChar, ingredientData.unit)
-      .input('name', sql.NVarChar, ingredientData.name)
+      .input('recipeId', sql.Int, ingredient.recipeId)
+      .input('quantity', sql.Float, ingredient.quantity)
+      .input('unit', sql.NVarChar, ingredient.unit)
+      .input('name', sql.NVarChar, ingredient.name)
       .query(sqlQueries.createIngredient);
     return newIngredient.recordset;
   } catch (error) {
@@ -55,20 +86,6 @@ const deleteIngredient = async (id) => {
       .input('id', sql.Int, id)
       .query(sqlQueries.deleteIngredient);
     return deleteIngredient.recordset;
-  } catch (error) {
-    return error.message;
-  }
-};
-
-const getRecipeIngredientsById = async (id) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('recipes');
-    const oneRecipe = await pool
-      .request()
-      .input('id', sql.Int, id)
-      .query(sqlQueries.getRecipeIngredientsById);
-    return oneRecipe.recordset;
   } catch (error) {
     return error.message;
   }
