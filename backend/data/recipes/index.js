@@ -29,6 +29,24 @@ const getRecipeById = async (id) => {
   }
 };
 
+const createRecipe = async (recipeData) => {
+  try {
+    console.log(recipeData.title);
+
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const newRecipe = await pool
+      .request()
+      .input('title', sql.NVarChar, recipeData.title)
+      .input('description', sql.NVarChar, recipeData.description)
+      .input('picture', sql.NVarChar, recipeData.picture)
+      .query(sqlQueries.createRecipe);
+    return newRecipe.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const getRecipeIngredientsById = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -158,4 +176,5 @@ module.exports = {
   deleteIngredient,
   createInstruction,
   deleteInstruction,
+  createRecipe,
 };

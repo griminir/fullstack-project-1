@@ -25,6 +25,16 @@ const getRecipeById = async (req, res, next) => {
   }
 };
 
+const createRecipe = async (req, res, next) => {
+  try {
+    const newRecipeData = req.body;
+    const newRecipe = await recipeData.createRecipe(newRecipeData);
+    res.send(newRecipe);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 // ingredients
 const getRecipeIngredientsById = async (req, res, next) => {
   try {
@@ -104,4 +114,5 @@ module.exports = {
   deleteIngredient,
   createInstruction,
   deleteInstruction,
+  createRecipe,
 };
