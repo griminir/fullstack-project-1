@@ -92,10 +92,25 @@ const createInstruction = async (instructionData) => {
   try {
     let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('recipes');
+
+    if (Array.isArray(instructionData) && instructionData.length > 1) {
+      for (const instruction of instructionData) {
+        await pool
+          .request()
+          .input('recipeId', sql.Int, instruction.recipeId)
+          .input('step', sql.NChar, instruction.step)
+          .query(sqlQueries.createInstruction);
+      }
+      return { message: 'Instructions inserted successfully' };
+    }
+
+    const instruction = Array.isArray(instructionData)
+      ? instructionData[0]
+      : instructionData;
     const newInstruction = await pool
       .request()
-      .input('recipeId', sql.Int, instructionData.recipeId)
-      .input('step', sql.NChar, instructionData.step)
+      .input('recipeId', sql.Int, instruction.recipeId)
+      .input('step', sql.NChar, instruction.step)
       .query(sqlQueries.createInstruction);
     return newInstruction.recordset;
   } catch (error) {
