@@ -1,6 +1,7 @@
 import { VStack, Image, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import Recipe from '../interfaces/Recipe';
+import noImage from '../assets/no-image.webp';
 
 interface Props {
   recipe: Recipe;
@@ -13,7 +14,7 @@ const RecipeDetailView = ({ recipe }: Props) => {
 
   return (
     <VStack width={'100%'} justifyContent='center'>
-      <Image width={'100%'} src={picture} alt={title} />
+      <Image width={'100%'} src={picture ? picture : noImage} alt={title} />
       <FormControl justifyContent={'center'}>
         <FormLabel textAlign='center' width='100%'>
           PictureURL:
