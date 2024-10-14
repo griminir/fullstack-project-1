@@ -19,6 +19,7 @@ import IngredientDetailView from '../components/IngredientDetailView';
 import { Instruction } from '../hooks/useInstructions';
 import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
+import useCreateInstruction from '../hooks/useCreateInstruction';
 
 const NewRecipePage = () => {
   // recipe details
@@ -38,17 +39,19 @@ const NewRecipePage = () => {
   };
 
   const handleDeleteIngredient = (id: number) => {
-    setIngredients(ingredients.filter((_, index) => index !== id));
+    setIngredients(ingredients.filter((s) => s.ingredientId !== id));
   };
 
   // instructions details ----------------------------------------------------------------------------------
   const [instructions, setInstructions] = useState([] as Instruction[]);
+  const { mutate: createInstructions } = useCreateInstruction();
+
   const handleAddInstruction = (data: Instruction) => {
     setInstructions([...instructions, data]);
   };
 
   const handleDeleteInstruction = (id: number) => {
-    setInstructions(instructions.filter((_, index) => index !== id));
+    setInstructions(instructions.filter((s) => s.id !== id));
   };
 
   return (
@@ -93,12 +96,12 @@ const NewRecipePage = () => {
           </FormControl>
 
           <Heading>Ingredients</Heading>
-          {ingredients?.map((ingredient, index) => (
-            <HStack width={'100%'} key={index}>
+          {ingredients?.map((ingredient) => (
+            <HStack width={'100%'} key={ingredient.ingredientId}>
               <IngredientDetailView ingredient={ingredient} />
               <Button
                 bgColor={'red'}
-                onClick={() => handleDeleteIngredient(index)}
+                onClick={() => handleDeleteIngredient(ingredient.ingredientId)}
               >
                 Delete
               </Button>
@@ -108,7 +111,7 @@ const NewRecipePage = () => {
             colorScheme='teal'
             onClick={() =>
               handelAddIngredient({
-                ingredientId: 0,
+                ingredientId: Math.random(),
                 recipeId: 0,
                 quantity: 0,
                 unit: '',
@@ -120,11 +123,11 @@ const NewRecipePage = () => {
           </Button>
 
           <Heading>Instructions</Heading>
-          {instructions?.map((instruction, index) => (
-            <HStack width={'100%'} key={index}>
+          {instructions?.map((instruction) => (
+            <HStack width={'100%'} key={instruction.id}>
               <InstructionsDetailView instructions={instruction} />
               <Button
-                onClick={() => handleDeleteInstruction(index)}
+                onClick={() => handleDeleteInstruction(instruction.id)}
                 bgColor={'red'}
               >
                 Delete
@@ -135,7 +138,7 @@ const NewRecipePage = () => {
             onClick={() =>
               handleAddInstruction({
                 recipeId: 0,
-                id: 0,
+                id: Math.random(),
                 step: '',
               })
             }
@@ -160,12 +163,18 @@ const NewRecipePage = () => {
                     recipeId: response[0].id,
                   })
                 );
-
-                // Log the updated ingredients
-                console.log(updatedIngredients);
+                const updatedInstructions = await instructions.map(
+                  (instruction) => ({
+                    ...instruction,
+                    recipeId: response[0].id,
+                  })
+                );
 
                 // Create the ingredients
                 await createIngredients(updatedIngredients);
+
+                // Create the instructions
+                await createInstructions(updatedInstructions);
               } catch (error) {
                 console.error('Error creating recipe or ingredients:', error);
               }

@@ -7,7 +7,7 @@ const apiClient = new APIClient<Instruction>('/recipes');
 
 const useCreateInstruction = () =>
   useMutation({
-    mutationFn: (newInstruction: Instruction) =>
+    mutationFn: (newInstruction: Instruction | Instruction[]) =>
       apiClient.post(newInstruction, 'instructions'),
     onError: (error) => {
       console.error(error);
