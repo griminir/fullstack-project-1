@@ -14,10 +14,9 @@ const {
   createInstruction,
   deleteInstruction,
   createRecipe,
-  getIdFromRecipe,
 } = recipeController;
 
-router.get('/recipes/:title/:description', getIdFromRecipe);
+
 router.get('/recipes', getAllRecipes);
 router.get('/recipes/:id', getRecipeById);
 router.get('/recipes/:id/instructions', getRecipeInstructionsById);

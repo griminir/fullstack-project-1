@@ -11,8 +11,9 @@ const useCreateRecipe = () => {
     onError: (error) => {
       console.error(error);
     },
-    onSuccess: () => {
-      console.log('Recipe created');
+    onSuccess: (data) => {
+      console.log('Recipe created with ID:', data[0].id);
+      console.log(data);
     },
     onSettled: (_, error) => {
       if (error) {

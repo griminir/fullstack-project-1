@@ -4,21 +4,6 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
-const getIdFromRecipe = async (title, description) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('recipes');
-    const recipeId = await pool
-      .request()
-      .input('title', sql.NVarChar, title)
-      .input('description', sql.NVarChar, description)
-      .query(sqlQueries.getIdFromRecipe);
-    return recipeId.recordset[0].id;
-  } catch (error) {
-    return error.message;
-  }
-};
-
 const getAllRecipes = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -192,5 +177,4 @@ module.exports = {
   createInstruction,
   deleteInstruction,
   createRecipe,
-  getIdFromRecipe,
 };
