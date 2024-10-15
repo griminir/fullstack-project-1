@@ -19,8 +19,8 @@ const {
 
 router.get('/recipes', getAllRecipes);
 router.get('/recipes/:id', getRecipeById);
-router.get('/recipes/:id/instructions', getRecipeInstructionsById);
 router.get('/recipes/:id/ingredients', getRecipeIngredientsById);
+router.get('/recipes/:id/instructions', getRecipeInstructionsById);
 router.post('/recipes', createRecipe);
 router.post('/recipes/ingredients', createIngredient);
 router.post('/recipes/instructions', createInstruction);
