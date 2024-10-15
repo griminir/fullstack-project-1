@@ -6,7 +6,7 @@ const apiClient = new APIClient<Recipe>('/recipes');
 
 const useRecipes = () =>
   useQuery({
-    queryKey: ['/recipes'],
+    queryKey: ['recipes'],
     queryFn: () => apiClient.getAll(),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

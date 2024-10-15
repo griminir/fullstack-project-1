@@ -10,7 +10,13 @@ interface Props {
 const RecipeCard = ({ recipe }: Props) => {
   return (
     <Card>
-      <Image src={recipe.picture === null ? noImage : recipe.picture} />
+      <Image
+        src={
+          recipe.picture === null || recipe.picture === ''
+            ? noImage
+            : recipe.picture
+        }
+      />
       <CardBody>
         <Heading fontSize='2xl'>
           <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>

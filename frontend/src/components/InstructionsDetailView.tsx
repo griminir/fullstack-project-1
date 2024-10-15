@@ -4,9 +4,10 @@ import { useState } from 'react';
 
 interface Props {
   instructions: Instruction;
+  updateInstruction: (id: number, data: Instruction) => void;
 }
 
-const InstructionsDetailView = ({ instructions }: Props) => {
+const InstructionsDetailView = ({ instructions, updateInstruction }: Props) => {
   const [step, setStep] = useState(instructions.step);
 
   return (
@@ -18,7 +19,13 @@ const InstructionsDetailView = ({ instructions }: Props) => {
         <Input
           flex='auto'
           value={step}
-          onChange={(e) => setStep(e.target.value)}
+          onChange={(e) => {
+            setStep(e.target.value);
+            updateInstruction(instructions.id, {
+              ...instructions,
+              step: e.target.value,
+            });
+          }}
         />
       </FormControl>
     </HStack>

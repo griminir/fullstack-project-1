@@ -20,8 +20,10 @@ import { Instruction } from '../hooks/useInstructions';
 import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useCreateInstruction from '../hooks/useCreateInstruction';
+import { useNavigate } from 'react-router-dom';
 
 const NewRecipePage = () => {
+  const navigate = useNavigate();
   // recipe details ---------------------------------------------------------------------------------------
   const [recipe, setRecipe] = useState({
     title: '',
@@ -63,6 +65,16 @@ const NewRecipePage = () => {
   const handleDeleteInstruction = (id: number) => {
     setInstructions(instructions.filter((s) => s.id !== id));
   };
+
+  function updateInstruction(id: number, data: Instruction) {
+    const updatedInstructions = instructions.map((instruction) => {
+      if (instruction.id === id) {
+        return data;
+      }
+      return instruction;
+    });
+    setInstructions(updatedInstructions);
+  }
 
   return (
     <Grid templateAreas={`"main"`}>
@@ -138,7 +150,10 @@ const NewRecipePage = () => {
           <Heading>Instructions</Heading>
           {instructions?.map((instruction) => (
             <HStack width={'100%'} key={instruction.id}>
-              <InstructionsDetailView instructions={instruction} />
+              <InstructionsDetailView
+                updateInstruction={updateInstruction}
+                instructions={instruction}
+              />
               <Button
                 onClick={() => handleDeleteInstruction(instruction.id)}
                 bgColor={'red'}
@@ -161,6 +176,7 @@ const NewRecipePage = () => {
           </Button>
 
           <Button
+            disabled={instructions.length < 1 || ingredients.length < 1}
             colorScheme='teal'
             onClick={async () => {
               try {
@@ -188,6 +204,9 @@ const NewRecipePage = () => {
 
                 // Create the instructions
                 await createInstructions(updatedInstructions);
+
+                // Navigate to the recipe page
+                navigate('/');
               } catch (error) {
                 console.error('Error creating recipe or ingredients:', error);
               }

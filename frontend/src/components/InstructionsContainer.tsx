@@ -10,6 +10,7 @@ import InstructionsDetailView from '../components/InstructionsDetailView';
 import useInstructions, { Instruction } from '../hooks/useInstructions';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import useDeleteInstruction from '../hooks/useDeleteInstruction';
+import { useState } from 'react';
 
 interface Props {
   idParam: number;
@@ -22,6 +23,7 @@ const InstructionsContainer = ({ idParam }: Props) => {
     error: InstructionsError,
     isPending: InstructionsPending,
   } = useInstructions(idParam);
+  const [instructions, setInstructions] = useState(InstructionsData);
 
   // data mutation
   const { mutate: addInstruction } = useCreateInstruction();
@@ -38,6 +40,16 @@ const InstructionsContainer = ({ idParam }: Props) => {
     deleteInstruction(id);
   };
 
+  function updateInstruction(id: number, data: Instruction) {
+    const updatedInstructions = instructions?.map((instruction) => {
+      if (instruction.id === id) {
+        return data;
+      }
+      return instruction;
+    });
+    setInstructions(updatedInstructions);
+  }
+
   if (InstructionsPending) return <Spinner />;
 
   if (InstructionsError || !InstructionsData) throw InstructionsError;
@@ -46,9 +58,12 @@ const InstructionsContainer = ({ idParam }: Props) => {
     <Box width={'100%'}>
       <VStack spacing={10}>
         <Heading>Instructions</Heading>
-        {InstructionsData?.map((instruction) => (
+        {instructions?.map((instruction) => (
           <HStack width={'100%'} key={instruction.id}>
-            <InstructionsDetailView instructions={instruction} />
+            <InstructionsDetailView
+              updateInstruction={updateInstruction}
+              instructions={instruction}
+            />
             <Button
               onClick={() => handleDeleteInstruction(instruction.id)}
               bgColor={'red'}
