@@ -22,7 +22,7 @@ import useCreateIngredient from '../hooks/useCreateIngredient';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 
 const NewRecipePage = () => {
-  // recipe details
+  // recipe details ---------------------------------------------------------------------------------------
   const [recipe, setRecipe] = useState({
     title: '',
     description: '',
@@ -41,6 +41,16 @@ const NewRecipePage = () => {
   const handleDeleteIngredient = (id: number) => {
     setIngredients(ingredients.filter((s) => s.ingredientId !== id));
   };
+
+  function updateIngredient(id: number, data: Ingredients) {
+    const updatedIngredients = ingredients.map((ingredient) => {
+      if (ingredient.ingredientId === id) {
+        return data;
+      }
+      return ingredient;
+    });
+    setIngredients(updatedIngredients);
+  }
 
   // instructions details ----------------------------------------------------------------------------------
   const [instructions, setInstructions] = useState([] as Instruction[]);
@@ -98,7 +108,10 @@ const NewRecipePage = () => {
           <Heading>Ingredients</Heading>
           {ingredients?.map((ingredient) => (
             <HStack width={'100%'} key={ingredient.ingredientId}>
-              <IngredientDetailView ingredient={ingredient} />
+              <IngredientDetailView
+                ingredient={ingredient}
+                updateIngredient={updateIngredient}
+              />
               <Button
                 bgColor={'red'}
                 onClick={() => handleDeleteIngredient(ingredient.ingredientId)}
@@ -151,7 +164,7 @@ const NewRecipePage = () => {
             colorScheme='teal'
             onClick={async () => {
               try {
-                // Create the recipe and get the response
+                // Create the recipe and get the response needs to be mutatedAsync to get the id i think
                 const response = await createRecipe({ ...recipe });
 
                 console.log('this is the data:' + response[0].id);
