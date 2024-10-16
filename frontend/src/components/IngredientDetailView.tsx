@@ -8,9 +8,7 @@ interface Props {
 }
 
 const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
-  const [quantity, setQuantity] = useState(ingredient.quantity);
-  const [unit, setUnit] = useState(ingredient.unit);
-  const [name, setName] = useState(ingredient.name);
+  const [updatedIngredient, setUpdatedIngredient] = useState(ingredient);
 
   return (
     <HStack width={'100%'} align='stretch' spacing={4}>
@@ -18,11 +16,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
         <FormLabel flex='1'>Quantity:</FormLabel>
         <Input
           flex='2'
-          value={quantity}
+          value={updatedIngredient.quantity}
           onChange={(e) => {
-            setQuantity(Number(e.target.value));
-            updateIngredient(ingredient.ingredientId, {
-              ...ingredient,
+            setUpdatedIngredient({
+              ...updatedIngredient,
+              quantity: Number(e.target.value),
+            });
+            updateIngredient(updatedIngredient.ingredientId, {
+              ...updatedIngredient,
               quantity: Number(e.target.value),
             });
           }}
@@ -33,11 +34,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
         </FormLabel>
         <Input
           flex='2'
-          value={unit}
+          value={updatedIngredient.unit}
           onChange={(e) => {
-            setUnit(e.target.value);
-            updateIngredient(ingredient.ingredientId, {
-              ...ingredient,
+            setUpdatedIngredient({
+              ...updatedIngredient,
+              unit: e.target.value,
+            });
+            updateIngredient(updatedIngredient.ingredientId, {
+              ...updatedIngredient,
               unit: e.target.value,
             });
           }}
@@ -48,11 +52,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
         </FormLabel>
         <Input
           flex='2'
-          value={name}
+          value={updatedIngredient.name}
           onChange={(e) => {
-            setName(e.target.value);
-            updateIngredient(ingredient.ingredientId, {
-              ...ingredient,
+            setUpdatedIngredient({
+              ...updatedIngredient,
+              name: e.target.value,
+            });
+            updateIngredient(updatedIngredient.ingredientId, {
+              ...updatedIngredient,
               name: e.target.value,
             });
           }}

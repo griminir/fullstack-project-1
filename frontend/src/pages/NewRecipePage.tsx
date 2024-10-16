@@ -208,7 +208,7 @@ const NewRecipePage = () => {
                 // Navigate to the recipe page
                 navigate('/');
               } catch (error) {
-                console.error('Error creating recipe or ingredients:', error);
+                console.error(error);
               }
             }}
           >

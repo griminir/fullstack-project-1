@@ -49,7 +49,6 @@ const InstructionsContainer = ({ idParam }: Props) => {
       return instruction;
     });
     setInstructions(updatedInstructions);
-    console.log(instructions);
   }
 
   if (InstructionsPending) return <Spinner />;

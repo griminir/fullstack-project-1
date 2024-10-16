@@ -1,10 +1,13 @@
-import { Grid, GridItem, VStack, Spinner } from '@chakra-ui/react';
+import { Grid, GridItem, VStack, Spinner, Button } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
 import IngredientsContainer from '../components/IngredientsContainer';
 import InstructionsContainer from '../components/InstructionsContainer';
 import { queryClient } from '../main';
+import Recipe from '../interfaces/Recipe';
+import useUpdateRecipe from '../hooks/useUpdateRecipe';
+import { useState } from 'react';
 
 const RecipeDetailsPage = () => {
   queryClient.invalidateQueries({ queryKey: ['ingredients'] });
@@ -17,6 +20,8 @@ const RecipeDetailsPage = () => {
     error: recipeError,
     isPending: recipePending,
   } = useSingleRecipe(param);
+  const [updatedRecipe, setUpdatedRecipe] = useState({} as Recipe);
+  const { mutate: updateRecipe } = useUpdateRecipe();
 
   //pending state
   if (recipePending) return <Spinner />;
@@ -24,16 +29,33 @@ const RecipeDetailsPage = () => {
   //error handeling
   if (recipeError || !recipeData) throw recipeError;
 
+  //handling click events
+  function updatingRecipe(data: Recipe) {
+    setUpdatedRecipe(data);
+  }
+
   return (
     <Grid paddingX={10} paddingBottom={10} templateAreas={`"main"`}>
       <GridItem area='main'>
         <VStack spacing={10}>
           {recipeData?.map((recipe) => (
-            <RecipeDetailView key={recipe.id} recipe={recipe} />
+            <RecipeDetailView
+              updatingRecipe={updatingRecipe}
+              key={recipe.id}
+              recipe={recipe}
+            />
           ))}
           <IngredientsContainer idParam={param} />
 
           <InstructionsContainer idParam={param} />
+
+          <Button
+            onClick={() => {
+              updateRecipe(updatedRecipe);
+            }}
+          >
+            Update recipe
+          </Button>
         </VStack>
       </GridItem>
     </Grid>

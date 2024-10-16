@@ -24,7 +24,7 @@ const IngredientsContainer = ({ idParam }: Props) => {
     error: ingredientsError,
     isPending: ingredientsPending,
   } = useAddIngredient(idParam);
-  const [ingredients, setIngredients] = useState(ingredientsData);
+  const [ingredients, setIngredients] = useState([] as Ingredients[]);
 
   // data mutation
   const { mutate: addIngredient } = useCreateIngredient();

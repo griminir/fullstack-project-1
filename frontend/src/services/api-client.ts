@@ -34,6 +34,15 @@ class APIClient<T> {
       .then((res) => res.data);
   }
 
+  update(data: T | T[], extendedEndpoint?: string) {
+    return axiosInstance
+      .put<T[]>(
+        `${this.endpoint}/${extendedEndpoint ? extendedEndpoint : ''}`,
+        data
+      )
+      .then((res) => res.data);
+  }
+
   delete(id: number, extendedEndpoint?: string) {
     return axiosInstance.delete(
       `${this.endpoint}/${extendedEndpoint ? extendedEndpoint : ''}/${id}`
