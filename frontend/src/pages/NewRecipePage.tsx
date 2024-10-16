@@ -79,10 +79,16 @@ const NewRecipePage = () => {
   return (
     <Grid templateAreas={`"main"`}>
       <GridItem area='main'>
-        <VStack width={'100%'} justifyContent='center' spacing={10}>
+        <VStack
+          width={'100%'}
+          paddingBottom={10}
+          justifyContent='center'
+          spacing={10}
+        >
           {/* this is where recipe starts */}
           <Image
             width={'100%'}
+            height={'700px'}
             src={recipe.picture ? recipe.picture : noImage}
             alt={recipe.title}
           />
@@ -175,45 +181,47 @@ const NewRecipePage = () => {
             Add new instruction
           </Button>
 
-          <Button
-            disabled={instructions.length < 1 || ingredients.length < 1}
-            colorScheme='teal'
-            onClick={async () => {
-              try {
-                // Create the recipe and get the response needs to be mutatedAsync to get the id i think
-                const response = await createRecipe({ ...recipe });
+          <HStack width={'100%'} justify={'flex-end'}>
+            <Button
+              disabled={instructions.length < 1 || ingredients.length < 1}
+              bg={'green.900'}
+              onClick={async () => {
+                try {
+                  // Create the recipe and get the response needs to be mutatedAsync to get the id i think
+                  const response = await createRecipe({ ...recipe });
 
-                console.log('this is the data:' + response[0].id);
+                  console.log('this is the data:' + response[0].id);
 
-                // Map the ingredients to include the recipeId
-                const updatedIngredients = await ingredients.map(
-                  (ingredient) => ({
-                    ...ingredient,
-                    recipeId: response[0].id,
-                  })
-                );
-                const updatedInstructions = await instructions.map(
-                  (instruction) => ({
-                    ...instruction,
-                    recipeId: response[0].id,
-                  })
-                );
+                  // Map the ingredients to include the recipeId
+                  const updatedIngredients = await ingredients.map(
+                    (ingredient) => ({
+                      ...ingredient,
+                      recipeId: response[0].id,
+                    })
+                  );
+                  const updatedInstructions = await instructions.map(
+                    (instruction) => ({
+                      ...instruction,
+                      recipeId: response[0].id,
+                    })
+                  );
 
-                // Create the ingredients
-                await createIngredients(updatedIngredients);
+                  // Create the ingredients
+                  await createIngredients(updatedIngredients);
 
-                // Create the instructions
-                await createInstructions(updatedInstructions);
+                  // Create the instructions
+                  await createInstructions(updatedInstructions);
 
-                // Navigate to the recipe page
-                navigate('/');
-              } catch (error) {
-                console.error(error);
-              }
-            }}
-          >
-            Create Recipe
-          </Button>
+                  // Navigate to the recipe page
+                  navigate('/');
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
+              Create Recipe
+            </Button>
+          </HStack>
         </VStack>
       </GridItem>
     </Grid>

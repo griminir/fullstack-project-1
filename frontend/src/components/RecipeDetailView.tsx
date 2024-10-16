@@ -17,6 +17,7 @@ const RecipeDetailView = ({ recipe, updatingRecipe }: Props) => {
     <VStack width={'100%'} justifyContent='center'>
       <Image
         width={'100%'}
+        height={'700px'}
         src={updatedRecipe.picture ? updatedRecipe.picture : noImage}
         alt={updatedRecipe.title}
       />

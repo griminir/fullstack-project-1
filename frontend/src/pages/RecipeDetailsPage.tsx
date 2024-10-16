@@ -1,4 +1,11 @@
-import { Grid, GridItem, VStack, Spinner, Button } from '@chakra-ui/react';
+import {
+  Grid,
+  GridItem,
+  VStack,
+  Spinner,
+  Button,
+  HStack,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
@@ -67,14 +74,17 @@ const RecipeDetailsPage = () => {
 
           <InstructionsContainer idParam={param} />
 
-          <Button
-            onClick={() => {
-              updateRecipe(updatedRecipe);
-              updateIngredients(updatedIngredients);
-            }}
-          >
-            Update recipe
-          </Button>
+          <HStack width={'100%'} justify={'flex-end'}>
+            <Button
+              bg={'green.900'}
+              onClick={() => {
+                updateRecipe(updatedRecipe);
+                updateIngredients(updatedIngredients);
+              }}
+            >
+              Update recipe
+            </Button>
+          </HStack>
         </VStack>
       </GridItem>
     </Grid>
