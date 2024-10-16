@@ -12,7 +12,6 @@ import useDeleteInstruction from '../hooks/useDeleteInstruction';
 import { useState } from 'react';
 import Instruction from '../interfaces/Instruction';
 import useInstructions from '../hooks/useInstructions';
-import { ins } from 'framer-motion/client';
 
 interface Props {
   idParam: number;
