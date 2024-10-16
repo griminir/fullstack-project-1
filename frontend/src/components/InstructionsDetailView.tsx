@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, HStack, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import Instruction from '../interfaces/Instructions';
+import Instruction from '../interfaces/Instruction';
 
 interface Props {
   instructions: Instruction;

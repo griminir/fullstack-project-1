@@ -10,8 +10,9 @@ import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import useDeleteInstruction from '../hooks/useDeleteInstruction';
 import { useState } from 'react';
-import Instruction from '../interfaces/Instructions';
+import Instruction from '../interfaces/Instruction';
 import useInstructions from '../hooks/useInstructions';
+import { ins } from 'framer-motion/client';
 
 interface Props {
   idParam: number;
@@ -20,11 +21,11 @@ interface Props {
 const InstructionsContainer = ({ idParam }: Props) => {
   // fetch data from the API
   const {
-    data: InstructionsData,
+    data: instructionsData,
     error: InstructionsError,
     isPending: InstructionsPending,
   } = useInstructions(idParam);
-  const [instructions, setInstructions] = useState(InstructionsData);
+  const [instructions, setInstructions] = useState(instructionsData);
 
   // data mutation
   const { mutate: addInstruction } = useCreateInstruction();
@@ -49,17 +50,18 @@ const InstructionsContainer = ({ idParam }: Props) => {
       return instruction;
     });
     setInstructions(updatedInstructions);
+    console.log(instructions);
   }
 
   if (InstructionsPending) return <Spinner />;
 
-  if (InstructionsError || !InstructionsData) throw InstructionsError;
+  if (InstructionsError || !instructionsData) throw InstructionsError;
 
   return (
     <Box width={'100%'}>
       <VStack spacing={10}>
         <Heading>Instructions</Heading>
-        {instructions?.map((instruction) => (
+        {instructionsData?.map((instruction) => (
           <HStack width={'100%'} key={instruction.id}>
             <InstructionsDetailView
               updateInstruction={updateInstruction}

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
-import Instruction from '../interfaces/Instructions';
+import Instruction from '../interfaces/Instruction';
 
 const apiClient = new APIClient<Instruction>('/recipes');
 

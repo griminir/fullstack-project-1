@@ -20,7 +20,7 @@ import useCreateIngredient from '../hooks/useCreateIngredient';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import { useNavigate } from 'react-router-dom';
 import Ingredients from '../interfaces/Ingredients';
-import Instruction from '../interfaces/Instructions';
+import Instruction from '../interfaces/Instruction';
 
 const NewRecipePage = () => {
   const navigate = useNavigate();
