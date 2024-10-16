@@ -7,10 +7,11 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import InstructionsDetailView from '../components/InstructionsDetailView';
-import useInstructions, { Instruction } from '../hooks/useInstructions';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import useDeleteInstruction from '../hooks/useDeleteInstruction';
 import { useState } from 'react';
+import Instruction from '../interfaces/Instructions';
+import useInstructions from '../hooks/useInstructions';
 
 interface Props {
   idParam: number;

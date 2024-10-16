@@ -1,6 +1,6 @@
 import { HStack, FormControl, FormLabel, Input } from '@chakra-ui/react';
-import { Ingredients } from '../hooks/UseIngeredients';
 import { useState } from 'react';
+import Ingredients from '../interfaces/Ingredients';
 
 interface Props {
   ingredient: Ingredients;

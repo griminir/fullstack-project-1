@@ -14,13 +14,13 @@ import Recipe from '../interfaces/Recipe';
 import { useState } from 'react';
 import noImage from '../assets/no-image.webp';
 import useCreateRecipe from '../hooks/useCreateRecipe';
-import { Ingredients } from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
-import { Instruction } from '../hooks/useInstructions';
 import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import { useNavigate } from 'react-router-dom';
+import Ingredients from '../interfaces/Ingredients';
+import Instruction from '../interfaces/Instructions';
 
 const NewRecipePage = () => {
   const navigate = useNavigate();

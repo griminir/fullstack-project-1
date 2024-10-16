@@ -6,11 +6,12 @@ import {
   VStack,
   HStack,
 } from '@chakra-ui/react';
-import useAddIngredient, { Ingredients } from '../hooks/UseIngeredients';
+import useAddIngredient from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useDeleteIngredient from '../hooks/useDeleteIngredient';
 import { useState } from 'react';
+import Ingredients from '../interfaces/Ingredients';
 
 interface Props {
   idParam: number;

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
-import { Ingredients } from './UseIngeredients';
 import { queryClient } from '../main';
+import Ingredients from '../interfaces/Ingredients';
 
 const apiClient = new APIClient<Ingredients>('/recipes');
 
