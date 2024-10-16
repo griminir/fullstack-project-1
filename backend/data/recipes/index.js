@@ -204,6 +204,36 @@ const createInstruction = async (instructionData) => {
   }
 };
 
+const updateInstruction = async (instructionData) => {
+  try {
+    let pool = sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+
+    if (Array.isArray(instructionData) && instructionData.length > 1) {
+      for (const instruction of instructionData) {
+        await pool
+          .request()
+          .input('id', sql.Int, instruction.id)
+          .input('step', sql.NChar, instruction.step)
+          .query(sqlQueries.updateInstruction);
+      }
+      return { message: 'Instructions updated successfully' };
+    }
+
+    const instruction = Array.isArray(instructionData)
+      ? instructionData[0]
+      : instructionData;
+    const updateInstruction = await pool
+      .request()
+      .input('id', sql.Int, instruction.id)
+      .input('step', sql.NChar, instruction.step)
+      .query(sqlQueries.updateInstruction);
+    return updateInstruction.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const deleteInstruction = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -230,4 +260,5 @@ module.exports = {
   createRecipe,
   updateRecipe,
   updateIngredient,
+  updateInstruction,
 };
