@@ -45,7 +45,7 @@ const NewRecipePage = () => {
   };
 
   function updateIngredient(id: number, data: Ingredients) {
-    const updatedIngredients = ingredients.map((ingredient) => {
+    const updatedIngredients = ingredients?.map((ingredient) => {
       if (ingredient.ingredientId === id) {
         return data;
       }

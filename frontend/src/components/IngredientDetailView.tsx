@@ -9,6 +9,7 @@ interface Props {
 
 const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
   const [updatedIngredient, setUpdatedIngredient] = useState(ingredient);
+  // console.log(updatedIngredient);
 
   return (
     <HStack width={'100%'} align='stretch' spacing={4}>
@@ -18,13 +19,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
           flex='2'
           value={updatedIngredient.quantity}
           onChange={(e) => {
+            const newQuantity = Number(e.target.value);
             setUpdatedIngredient({
               ...updatedIngredient,
-              quantity: Number(e.target.value),
+              quantity: newQuantity,
             });
             updateIngredient(updatedIngredient.ingredientId, {
               ...updatedIngredient,
-              quantity: Number(e.target.value),
+              quantity: newQuantity,
             });
           }}
         />
@@ -36,13 +38,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
           flex='2'
           value={updatedIngredient.unit}
           onChange={(e) => {
+            const newUnit = e.target.value;
             setUpdatedIngredient({
               ...updatedIngredient,
-              unit: e.target.value,
+              unit: newUnit,
             });
             updateIngredient(updatedIngredient.ingredientId, {
               ...updatedIngredient,
-              unit: e.target.value,
+              unit: newUnit,
             });
           }}
         />
@@ -54,13 +57,14 @@ const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
           flex='2'
           value={updatedIngredient.name}
           onChange={(e) => {
+            const newName = e.target.value;
             setUpdatedIngredient({
               ...updatedIngredient,
-              name: e.target.value,
+              name: newName,
             });
             updateIngredient(updatedIngredient.ingredientId, {
               ...updatedIngredient,
-              name: e.target.value,
+              name: newName,
             });
           }}
         />

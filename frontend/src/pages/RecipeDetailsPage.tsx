@@ -8,6 +8,8 @@ import { queryClient } from '../main';
 import Recipe from '../interfaces/Recipe';
 import useUpdateRecipe from '../hooks/useUpdateRecipe';
 import { useState } from 'react';
+import Ingredients from '../interfaces/Ingredients';
+import useUpdateIngredient from '../hooks/useUpdateIngredient';
 
 const RecipeDetailsPage = () => {
   queryClient.invalidateQueries({ queryKey: ['ingredients'] });
@@ -20,8 +22,20 @@ const RecipeDetailsPage = () => {
     error: recipeError,
     isPending: recipePending,
   } = useSingleRecipe(param);
+
+  //needed for updating the recipe
   const [updatedRecipe, setUpdatedRecipe] = useState({} as Recipe);
   const { mutate: updateRecipe } = useUpdateRecipe();
+
+  // needed for updating ingredients
+  const [updatedIngredients, setUpdatedIngredients] = useState(
+    [] as Ingredients[]
+  );
+  const { mutate: updateIngredients } = useUpdateIngredient();
+
+  function getIngredients(data: Ingredients[]) {
+    setUpdatedIngredients(data);
+  }
 
   //pending state
   if (recipePending) return <Spinner />;
@@ -45,13 +59,18 @@ const RecipeDetailsPage = () => {
               recipe={recipe}
             />
           ))}
-          <IngredientsContainer idParam={param} />
+
+          <IngredientsContainer
+            getIngredients={getIngredients}
+            idParam={param}
+          />
 
           <InstructionsContainer idParam={param} />
 
           <Button
             onClick={() => {
               updateRecipe(updatedRecipe);
+              updateIngredients(updatedIngredients);
             }}
           >
             Update recipe

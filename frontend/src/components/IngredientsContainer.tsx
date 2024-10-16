@@ -10,21 +10,20 @@ import useAddIngredient from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useDeleteIngredient from '../hooks/useDeleteIngredient';
-import { useState } from 'react';
 import Ingredients from '../interfaces/Ingredients';
 
 interface Props {
   idParam: number;
+  getIngredients: (data: Ingredients[]) => void;
 }
 
-const IngredientsContainer = ({ idParam }: Props) => {
+const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
   // fetch data from the API
   const {
     data: ingredientsData,
     error: ingredientsError,
     isPending: ingredientsPending,
   } = useAddIngredient(idParam);
-  const [ingredients, setIngredients] = useState([] as Ingredients[]);
 
   // data mutation
   const { mutate: addIngredient } = useCreateIngredient();
@@ -42,13 +41,13 @@ const IngredientsContainer = ({ idParam }: Props) => {
   };
 
   function updateIngredient(id: number, data: Ingredients) {
-    const updatedIngredients = ingredients?.map((ingredient) => {
+    const updatedIngredients = ingredientsData?.map((ingredient) => {
       if (ingredient.ingredientId === id) {
         return data;
       }
       return ingredient;
     });
-    setIngredients(updatedIngredients);
+    getIngredients(updatedIngredients as Ingredients[]);
   }
 
   //state handeling
