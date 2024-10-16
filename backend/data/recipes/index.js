@@ -47,6 +47,23 @@ const createRecipe = async (recipeData) => {
   }
 };
 
+const updateRecipe = async (recipeData) => {
+  try {
+    let pool = sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+    const updateRecipe = await pool
+      .request()
+      .input('id', sql.Int, recipeData.id)
+      .input('title', sql.NVarChar, recipeData.title)
+      .input('description', sql.NVarChar, recipeData.description)
+      .input('picture', sql.NVarChar, recipeData.picture)
+      .query(sqlQueries.updateRecipe);
+    return updateRecipe.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const getRecipeIngredientsById = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -177,4 +194,5 @@ module.exports = {
   createInstruction,
   deleteInstruction,
   createRecipe,
+  updateRecipe,
 };

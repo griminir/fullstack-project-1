@@ -35,6 +35,16 @@ const createRecipe = async (req, res, next) => {
   }
 };
 
+const updateRecipe = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const updated = await recipeData.updateRecipe(data);
+    res.send(updated);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 // ingredients
 const getRecipeIngredientsById = async (req, res, next) => {
   try {
@@ -115,4 +125,5 @@ module.exports = {
   createInstruction,
   deleteInstruction,
   createRecipe,
+  updateRecipe,
 };
