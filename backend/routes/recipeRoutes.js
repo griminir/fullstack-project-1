@@ -15,6 +15,7 @@ const {
   deleteInstruction,
   createRecipe,
   updateRecipe,
+  updateIngredient,
 } = recipeController;
 
 router.get('/recipes', getAllRecipes);
@@ -25,6 +26,7 @@ router.post('/recipes', createRecipe);
 router.post('/recipes/ingredients', createIngredient);
 router.post('/recipes/instructions', createInstruction);
 router.put('/recipes', updateRecipe);
+router.put('/recipes/ingredients', updateIngredient);
 router.delete('/recipes/ingredients/:id', deleteIngredient);
 router.delete('/recipes/instructions/:id', deleteInstruction);
 

@@ -112,6 +112,40 @@ const createIngredient = async (ingredientData) => {
   }
 };
 
+const updateIngredient = async (ingredientData) => {
+  try {
+    let pool = sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('recipes');
+
+    if (Array.isArray(ingredientData) && ingredientData.length > 1) {
+      for (const ingredient of ingredientData) {
+        await pool
+          .request()
+          .input('id', sql.Int, ingredient.id)
+          .input('quantity', sql.Float, ingredient.quantity)
+          .input('unit', sql.NVarChar, ingredient.unit)
+          .input('name', sql.NVarChar, ingredient.name)
+          .query(sqlQueries.updateIngredient);
+      }
+      return { message: 'Ingredients updated successfully' };
+    }
+
+    const ingredient = Array.isArray(ingredientData)
+      ? ingredientData[0]
+      : ingredientData;
+    const updateIngredient = await pool
+      .request()
+      .input('id', sql.Int, ingredient.id)
+      .input('quantity', sql.Float, ingredient.quantity)
+      .input('unit', sql.NVarChar, ingredient.unit)
+      .input('name', sql.NVarChar, ingredient.name)
+      .query(sqlQueries.updateIngredient);
+    return updateIngredient.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const deleteIngredient = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -195,4 +229,5 @@ module.exports = {
   deleteInstruction,
   createRecipe,
   updateRecipe,
+  updateIngredient,
 };

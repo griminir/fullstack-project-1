@@ -70,6 +70,16 @@ const createIngredient = async (req, res, next) => {
   }
 };
 
+const updateIngredient = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const updated = await recipeData.updateIngredient(data);
+    res.send(updated);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 const deleteIngredient = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -126,4 +136,5 @@ module.exports = {
   deleteInstruction,
   createRecipe,
   updateRecipe,
+  updateIngredient,
 };
