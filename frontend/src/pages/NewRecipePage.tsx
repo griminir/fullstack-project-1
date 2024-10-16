@@ -183,7 +183,7 @@ const NewRecipePage = () => {
 
           <HStack width={'100%'} justify={'flex-end'}>
             <Button
-              disabled={instructions.length < 1 || ingredients.length < 1}
+              isDisabled={ingredients.length === 0 || instructions.length === 0}
               bg={'green.900'}
               onClick={async () => {
                 try {
