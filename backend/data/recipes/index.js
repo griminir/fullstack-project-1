@@ -49,7 +49,7 @@ const createRecipe = async (recipeData) => {
 
 const updateRecipe = async (recipeData) => {
   try {
-    let pool = sql.connect(config.sql);
+    let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('recipes');
     const updateRecipe = await pool
       .request()
@@ -114,7 +114,7 @@ const createIngredient = async (ingredientData) => {
 
 const updateIngredient = async (ingredientData) => {
   try {
-    let pool = sql.connect(config.sql);
+    let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('recipes');
 
     if (Array.isArray(ingredientData) && ingredientData.length > 1) {
@@ -206,7 +206,7 @@ const createInstruction = async (instructionData) => {
 
 const updateInstruction = async (instructionData) => {
   try {
-    let pool = sql.connect(config.sql);
+    let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('recipes');
 
     if (Array.isArray(instructionData) && instructionData.length > 1) {
