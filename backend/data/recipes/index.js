@@ -121,7 +121,7 @@ const updateIngredient = async (ingredientData) => {
       for (const ingredient of ingredientData) {
         await pool
           .request()
-          .input('id', sql.Int, ingredient.id)
+          .input('id', sql.Int, ingredient.ingredientId)
           .input('quantity', sql.Float, ingredient.quantity)
           .input('unit', sql.NVarChar, ingredient.unit)
           .input('name', sql.NVarChar, ingredient.name)
@@ -135,7 +135,7 @@ const updateIngredient = async (ingredientData) => {
       : ingredientData;
     const updateIngredient = await pool
       .request()
-      .input('id', sql.Int, ingredient.id)
+      .input('id', sql.Int, ingredient.ingredientId)
       .input('quantity', sql.Float, ingredient.quantity)
       .input('unit', sql.NVarChar, ingredient.unit)
       .input('name', sql.NVarChar, ingredient.name)
