@@ -1,7 +1,13 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { BsSearch } from 'react-icons/bs';
 
-const SearchInput = () => {
+import { Dispatch, SetStateAction } from 'react';
+
+interface Props {
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+}
+
+const SearchInput = ({ setSearchTerm }: Props) => {
   return (
     <InputGroup>
       <InputLeftElement children={<BsSearch />} />
@@ -11,6 +17,7 @@ const SearchInput = () => {
         borderRadius={20}
         placeholder='Search Recipes...'
         variant='filled'
+        onChange={(e) => setSearchTerm(e.target.value)}
       ></Input>
     </InputGroup>
   );

@@ -4,7 +4,11 @@ import RecipeCard from './RecipeCard';
 import RecipeCardSkeleton from './RecipeCardSkeleton';
 import RecipeCardContainer from './RecipeCardContainer';
 
-const RecipeGrid = () => {
+interface Props {
+  searchTerm: string;
+}
+
+const RecipeGrid = ({ searchTerm }: Props) => {
   const { data: recipeData, error: recipeError, isPending } = useRecipes();
   const skeletons = [
     'one',
@@ -19,6 +23,10 @@ const RecipeGrid = () => {
 
   if (recipeError) return <Text>{recipeError.message}</Text>;
 
+  const filteredRecipes = recipeData?.filter((recipe) =>
+    new RegExp(searchTerm, 'i').test(recipe.title)
+  );
+
   return (
     <SimpleGrid
       columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -31,7 +39,7 @@ const RecipeGrid = () => {
             <RecipeCardSkeleton />
           </RecipeCardContainer>
         ))}
-      {recipeData?.map((recipe) => (
+      {filteredRecipes?.map((recipe) => (
         <RecipeCardContainer key={recipe.id}>
           <RecipeCard recipe={recipe} />
         </RecipeCardContainer>
