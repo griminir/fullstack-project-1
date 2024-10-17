@@ -12,6 +12,7 @@ const useUpdateIngredient = () =>
     onError: (error) => {
       console.error(error);
     },
+    onSuccess: () => {},
     onSettled: (_, error) => {
       if (error) {
         console.error(error);

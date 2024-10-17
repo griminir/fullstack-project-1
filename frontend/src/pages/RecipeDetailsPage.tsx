@@ -6,7 +6,7 @@ import {
   Button,
   HStack,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useSingleRecipe from '../hooks/useSingleRecipe';
 import RecipeDetailView from '../components/RecipeDetailView';
 import IngredientsContainer from '../components/IngredientsContainer';
@@ -19,6 +19,7 @@ import Ingredients from '../interfaces/Ingredients';
 import useUpdateIngredient from '../hooks/useUpdateIngredient';
 
 const RecipeDetailsPage = () => {
+  const navigate = useNavigate();
   queryClient.invalidateQueries({ queryKey: ['ingredients'] });
   queryClient.invalidateQueries({ queryKey: ['instructions'] });
   // fetch data from the API
@@ -38,7 +39,7 @@ const RecipeDetailsPage = () => {
   const [updatedIngredients, setUpdatedIngredients] = useState(
     [] as Ingredients[]
   );
-  const { mutate: updateIngredients } = useUpdateIngredient();
+  const { mutateAsync: updateIngredients } = useUpdateIngredient();
 
   function getIngredients(data: Ingredients[]) {
     setUpdatedIngredients(data);
@@ -77,9 +78,15 @@ const RecipeDetailsPage = () => {
           <HStack width={'100%'} justify={'flex-end'}>
             <Button
               bg={'green.900'}
-              onClick={() => {
-                updateRecipe(updatedRecipe);
-                updateIngredients(updatedIngredients);
+              onClick={async () => {
+                await updateRecipe(updatedRecipe);
+                console.log(updatedIngredients);
+
+                const checkData = await updateIngredients(updatedIngredients);
+
+                console.log(checkData);
+
+                navigate('/');
               }}
             >
               Update recipe

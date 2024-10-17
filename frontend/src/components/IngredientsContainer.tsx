@@ -6,11 +6,12 @@ import {
   VStack,
   HStack,
 } from '@chakra-ui/react';
-import useAddIngredient from '../hooks/UseIngeredients';
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useDeleteIngredient from '../hooks/useDeleteIngredient';
 import Ingredients from '../interfaces/Ingredients';
+import useIngredients from '../hooks/UseIngeredients';
+import { useEffect, useState } from 'react';
 
 interface Props {
   idParam: number;
@@ -23,7 +24,17 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
     data: ingredientsData,
     error: ingredientsError,
     isPending: ingredientsPending,
-  } = useAddIngredient(idParam);
+  } = useIngredients(idParam);
+
+  const [mutatedIngredients, setMutatedIngredients] = useState(
+    [] as Ingredients[]
+  );
+
+  useEffect(() => {
+    if (ingredientsData) {
+      setMutatedIngredients(ingredientsData);
+    }
+  }, [ingredientsData]);
 
   // data mutation
   const { mutate: addIngredient } = useCreateIngredient();
@@ -41,13 +52,15 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
   };
 
   function updateIngredient(id: number, data: Ingredients) {
-    const updatedIngredients = ingredientsData?.map((ingredient) => {
+    console.log(mutatedIngredients);
+    const updatedIngredient = mutatedIngredients?.map((ingredient) => {
       if (ingredient.ingredientId === id) {
         return data;
       }
       return ingredient;
     });
-    getIngredients(updatedIngredients as Ingredients[]);
+    setMutatedIngredients(updatedIngredient);
+    getIngredients(updatedIngredient as Ingredients[]);
   }
 
   //state handeling

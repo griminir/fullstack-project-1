@@ -127,7 +127,7 @@ const updateIngredient = async (ingredientData) => {
           .input('name', sql.NVarChar, ingredient.name)
           .query(sqlQueries.updateIngredient);
       }
-      return { message: 'Ingredients updated successfully' };
+      return ingredientData.recordset;
     }
 
     const ingredient = Array.isArray(ingredientData)
