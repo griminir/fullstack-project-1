@@ -1,13 +1,17 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem, VStack } from '@chakra-ui/react';
 import RecipeGrid from '../components/RecipeGrid';
 import { queryClient } from '../main';
+import SearchInput from '../components/SearchInput';
 
 const HomePage = () => {
   queryClient.invalidateQueries({ queryKey: ['recipes'] });
   return (
-    <Grid templateAreas={`"main"`}>
+    <Grid marginY={2} templateAreas={`"main"`}>
       <GridItem area='main'>
-        <RecipeGrid />
+        <VStack spacing={4} align='stretch'>
+          <SearchInput />
+          <RecipeGrid />
+        </VStack>
       </GridItem>
     </Grid>
   );
