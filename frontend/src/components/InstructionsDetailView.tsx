@@ -8,7 +8,7 @@ interface Props {
 }
 
 const InstructionsDetailView = ({ instructions, updateInstruction }: Props) => {
-  const [step, setStep] = useState(instructions.step);
+  const [updatedInstruction, setInstruction] = useState(instructions);
 
   return (
     <HStack width={'100%'} align='stretch' spacing={2}>
@@ -18,12 +18,13 @@ const InstructionsDetailView = ({ instructions, updateInstruction }: Props) => {
         </FormLabel>
         <Input
           flex='auto'
-          value={step}
+          value={updatedInstruction.step}
           onChange={(e) => {
-            setStep(e.target.value);
-            updateInstruction(instructions.id, {
-              ...instructions,
-              step: e.target.value,
+            const newStep = e.target.value;
+            setInstruction({ ...updatedInstruction, step: newStep });
+            updateInstruction(updatedInstruction.id, {
+              ...updatedInstruction,
+              step: newStep,
             });
           }}
         />

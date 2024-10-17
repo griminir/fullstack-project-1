@@ -9,22 +9,31 @@ import {
 import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import useDeleteInstruction from '../hooks/useDeleteInstruction';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Instruction from '../interfaces/Instruction';
 import useInstructions from '../hooks/useInstructions';
 
 interface Props {
   idParam: number;
+  getInstructions: (data: Instruction[]) => void;
 }
 
-const InstructionsContainer = ({ idParam }: Props) => {
-  // fetch data from the API
+const InstructionsContainer = ({ idParam, getInstructions }: Props) => {
+  // fetch data from the API and make in mutable
   const {
     data: instructionsData,
     error: InstructionsError,
     isPending: InstructionsPending,
   } = useInstructions(idParam);
-  const [instructions, setInstructions] = useState(instructionsData);
+  const [mutatedInstructions, setMutatedInstructions] = useState(
+    [] as Instruction[]
+  );
+
+  useEffect(() => {
+    if (instructionsData) {
+      setMutatedInstructions(instructionsData);
+    }
+  }, [instructionsData]);
 
   // data mutation
   const { mutate: addInstruction } = useCreateInstruction();
@@ -42,13 +51,14 @@ const InstructionsContainer = ({ idParam }: Props) => {
   };
 
   function updateInstruction(id: number, data: Instruction) {
-    const updatedInstructions = instructions?.map((instruction) => {
+    const updatedInstructions = mutatedInstructions?.map((instruction) => {
       if (instruction.id === id) {
         return data;
       }
       return instruction;
     });
-    setInstructions(updatedInstructions);
+    setMutatedInstructions(updatedInstructions);
+    getInstructions(updatedInstructions);
   }
 
   if (InstructionsPending) return <Spinner />;

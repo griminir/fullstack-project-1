@@ -19,7 +19,7 @@ import InstructionsDetailView from '../components/InstructionsDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useCreateInstruction from '../hooks/useCreateInstruction';
 import { useNavigate } from 'react-router-dom';
-import Ingredients from '../interfaces/Ingredients';
+import Ingredient from '../interfaces/Ingredient';
 import Instruction from '../interfaces/Instruction';
 
 const NewRecipePage = () => {
@@ -33,10 +33,10 @@ const NewRecipePage = () => {
   const { mutateAsync: createRecipe } = useCreateRecipe();
 
   // ingredients details ----------------------------------------------------------------------------------
-  const [ingredients, setIngredients] = useState([] as Ingredients[]);
+  const [ingredients, setIngredients] = useState([] as Ingredient[]);
   const { mutate: createIngredients } = useCreateIngredient();
 
-  const handelAddIngredient = (data: Ingredients) => {
+  const handelAddIngredient = (data: Ingredient) => {
     setIngredients([...ingredients, data]);
   };
 
@@ -44,7 +44,7 @@ const NewRecipePage = () => {
     setIngredients(ingredients.filter((s) => s.ingredientId !== id));
   };
 
-  function updateIngredient(id: number, data: Ingredients) {
+  function updateIngredient(id: number, data: Ingredient) {
     const updatedIngredients = ingredients?.map((ingredient) => {
       if (ingredient.ingredientId === id) {
         return data;

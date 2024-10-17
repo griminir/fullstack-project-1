@@ -1,15 +1,14 @@
 import { HStack, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import Ingredients from '../interfaces/Ingredients';
+import Ingredient from '../interfaces/Ingredient';
 
 interface Props {
-  ingredient: Ingredients;
-  updateIngredient: (id: number, data: Ingredients) => void;
+  ingredient: Ingredient;
+  updateIngredient: (id: number, data: Ingredient) => void;
 }
 
 const IngredientDetailView = ({ ingredient, updateIngredient }: Props) => {
   const [updatedIngredient, setUpdatedIngredient] = useState(ingredient);
-  // console.log(updatedIngredient);
 
   return (
     <HStack width={'100%'} align='stretch' spacing={4}>

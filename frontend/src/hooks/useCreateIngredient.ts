@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
 import { queryClient } from '../main';
-import Ingredients from '../interfaces/Ingredients';
+import Ingredient from '../interfaces/Ingredient';
 
-const apiClient = new APIClient<Ingredients>('/recipes');
+const apiClient = new APIClient<Ingredient>('/recipes');
 
 const useCreateIngredient = () =>
   useMutation({
-    mutationFn: (newIngredient: Ingredients | Ingredients[]) =>
+    mutationFn: (newIngredient: Ingredient | Ingredient[]) =>
       apiClient.post(newIngredient, 'ingredients'),
     onError: (error) => {
       console.error(error);

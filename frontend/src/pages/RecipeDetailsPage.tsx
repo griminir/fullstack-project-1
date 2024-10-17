@@ -15,8 +15,10 @@ import { queryClient } from '../main';
 import Recipe from '../interfaces/Recipe';
 import useUpdateRecipe from '../hooks/useUpdateRecipe';
 import { useState } from 'react';
-import Ingredients from '../interfaces/Ingredients';
-import useUpdateIngredient from '../hooks/useUpdateIngredient';
+import Ingredient from '../interfaces/Ingredient';
+import useUpdateIngredients from '../hooks/useUpdateIngredients';
+import Instruction from '../interfaces/Instruction';
+import useUpdateInstructions from '../hooks/useUpdateInstructions';
 
 const RecipeDetailsPage = () => {
   const navigate = useNavigate();
@@ -35,14 +37,28 @@ const RecipeDetailsPage = () => {
   const [updatedRecipe, setUpdatedRecipe] = useState({} as Recipe);
   const { mutate: updateRecipe } = useUpdateRecipe();
 
+  function updatingRecipe(data: Recipe) {
+    setUpdatedRecipe(data);
+  }
+
   // needed for updating ingredients
   const [updatedIngredients, setUpdatedIngredients] = useState(
-    [] as Ingredients[]
+    [] as Ingredient[]
   );
-  const { mutateAsync: updateIngredients } = useUpdateIngredient();
+  const { mutateAsync: updateIngredients } = useUpdateIngredients();
 
-  function getIngredients(data: Ingredients[]) {
+  function getIngredients(data: Ingredient[]) {
     setUpdatedIngredients(data);
+  }
+
+  // needed for updating instructions
+  const [updatedInstructions, setUpdatedInstructions] = useState(
+    [] as Instruction[]
+  );
+  const { mutateAsync: updateInstructions } = useUpdateInstructions();
+
+  function getInstructions(data: Instruction[]) {
+    setUpdatedInstructions(data);
   }
 
   //pending state
@@ -52,9 +68,6 @@ const RecipeDetailsPage = () => {
   if (recipeError || !recipeData) throw recipeError;
 
   //handling click events
-  function updatingRecipe(data: Recipe) {
-    setUpdatedRecipe(data);
-  }
 
   return (
     <Grid paddingX={10} paddingBottom={10} templateAreas={`"main"`}>
@@ -73,18 +86,20 @@ const RecipeDetailsPage = () => {
             idParam={param}
           />
 
-          <InstructionsContainer idParam={param} />
+          <InstructionsContainer
+            getInstructions={getInstructions}
+            idParam={param}
+          />
 
           <HStack width={'100%'} justify={'flex-end'}>
             <Button
               bg={'green.900'}
               onClick={async () => {
                 await updateRecipe(updatedRecipe);
-                console.log(updatedIngredients);
 
-                const checkData = await updateIngredients(updatedIngredients);
+                await updateIngredients(updatedIngredients);
 
-                console.log(checkData);
+                await updateInstructions(updatedInstructions);
 
                 navigate('/');
               }}

@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
-import Ingredients from '../interfaces/Ingredients';
+import Ingredient from '../interfaces/Ingredient';
 
-
-
-const apiClient = new APIClient<Ingredients>('/recipes');
+const apiClient = new APIClient<Ingredient>('/recipes');
 
 const useIngredients = (id: number) =>
   useQuery({

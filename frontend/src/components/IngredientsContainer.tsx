@@ -9,13 +9,13 @@ import {
 import IngredientDetailView from '../components/IngredientDetailView';
 import useCreateIngredient from '../hooks/useCreateIngredient';
 import useDeleteIngredient from '../hooks/useDeleteIngredient';
-import Ingredients from '../interfaces/Ingredients';
+import Ingredient from '../interfaces/Ingredient';
 import useIngredients from '../hooks/UseIngeredients';
 import { useEffect, useState } from 'react';
 
 interface Props {
   idParam: number;
-  getIngredients: (data: Ingredients[]) => void;
+  getIngredients: (data: Ingredient[]) => void;
 }
 
 const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
@@ -27,7 +27,7 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
   } = useIngredients(idParam);
 
   const [mutatedIngredients, setMutatedIngredients] = useState(
-    [] as Ingredients[]
+    [] as Ingredient[]
   );
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
   const { mutate: deleteIngredient } = useDeleteIngredient();
 
   // handeling click events
-  const handelAddIngredient = (data: Ingredients) => {
+  const handelAddIngredient = (data: Ingredient) => {
     console.log(data);
 
     addIngredient(data);
@@ -51,7 +51,7 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
     deleteIngredient(id);
   };
 
-  function updateIngredient(id: number, data: Ingredients) {
+  function updateIngredient(id: number, data: Ingredient) {
     console.log(mutatedIngredients);
     const updatedIngredient = mutatedIngredients?.map((ingredient) => {
       if (ingredient.ingredientId === id) {
@@ -60,7 +60,7 @@ const IngredientsContainer = ({ idParam, getIngredients }: Props) => {
       return ingredient;
     });
     setMutatedIngredients(updatedIngredient);
-    getIngredients(updatedIngredient as Ingredients[]);
+    getIngredients(updatedIngredient as Ingredient[]);
   }
 
   //state handeling

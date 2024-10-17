@@ -1,4 +1,4 @@
-export default interface Ingredients {
+export default interface Ingredient {
   ingredientId: number;
   recipeId: number;
   quantity: number;
