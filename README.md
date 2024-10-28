@@ -30,5 +30,5 @@
 
 <img src='readmeImages/mainpage.png' alt='mainpage'>
 <img src='readmeImages/edit_recipe_page.png' alt='editpage'>
-<img src='readmeImages/add_recipe_page.png' alt='addpage'>
+<img src='readmeImages/new_recipe_page.png' alt='addpage'>
 ###
