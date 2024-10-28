@@ -32,3 +32,11 @@
 <img src='readmeImages/edit_recipe_page.png' alt='editpage'>
 <img src='readmeImages/new_recipe_page.png' alt='addpage'>
 ###
+
+<h2 align="left">Database structure</h2>
+
+<img src='readmeImages/db_diagram.png' alt='database diagram'>
+<img src='readmeImages/table_recipe.png' alt='recipe table'>
+<img src='readmeImages/table_ingredient.png' alt='ingredient table'>
+<img src='readmeImages/table_instruction.png' alt='instruction table'>
+###
