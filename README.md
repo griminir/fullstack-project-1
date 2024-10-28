@@ -28,4 +28,7 @@
 
 <h2 align="left">Some pictures of the application</h2>
 
+<img src='readmeImages/mainpage.png' alt='mainpage'>
+<img src='readmeImages/edit_recipe_page.png' alt='editpage'>
+<img src='readmeImages/add_recipe_page.png' alt='addpage'>
 ###
