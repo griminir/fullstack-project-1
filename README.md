@@ -37,6 +37,6 @@
 
 <img src='readmeImages/db_diagram.png' alt='database diagram'>
 <img src='readmeImages/table_recipe.png' alt='recipe table'>
-<img src='readmeImages/table_ingredient.png' alt='ingredient table'>
-<img src='readmeImages/table_instruction.png' alt='instruction table'>
+<img src='readmeImages/table_ingredients.png' alt='ingredient table'>
+<img src='readmeImages/table_instructions.png' alt='instruction table'>
 ###
